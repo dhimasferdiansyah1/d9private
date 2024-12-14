@@ -63,27 +63,29 @@
 	}
 </script>
 
-<div
-	class="container mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center p-4 py-28"
->
-	<h1 class="mb-4 text-2xl font-bold">VCF Contact Name Generator</h1>
+<div class="w-full bg-zinc-900">
+	<div
+		class="container mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center p-4 py-28 text-zinc-200"
+	>
+		<h1 class="mb-4 text-2xl font-bold text-white">VCF Contact Name Generator</h1>
 
-	<VcfUploader on:fileupload={handleFileUpload} />
+		<VcfUploader on:fileupload={handleFileUpload} />
 
-	{#if vcfEntries.length > 0}
-		<div class="mt-4">
-			<RandomNameGenerator bind:totalContacts on:namesgenerated={handleNamesGenerated} />
+		{#if vcfEntries.length > 0}
+			<div class="mt-4">
+				<RandomNameGenerator bind:totalContacts on:namesgenerated={handleNamesGenerated} />
 
-			{#if showDownloader}
-				<div class="mt-4">
-					<VcfDownloader
-						vcfContents={modifiedVcfContents}
-						{inputName}
-						showDownloads={showDownloader}
-						{fileDetails}
-					/>
-				</div>
-			{/if}
-		</div>
-	{/if}
+				{#if showDownloader}
+					<div class="mt-4">
+						<VcfDownloader
+							vcfContents={modifiedVcfContents}
+							{inputName}
+							showDownloads={showDownloader}
+							{fileDetails}
+						/>
+					</div>
+				{/if}
+			</div>
+		{/if}
+	</div>
 </div>

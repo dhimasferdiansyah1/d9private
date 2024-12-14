@@ -39,15 +39,15 @@
 			type="file"
 			accept=".vcf"
 			multiple
-			class="block w-full text-sm text-slate-500
+			class="block w-full text-sm text-zinc-500
             file:mr-4 file:rounded-full file:border-0
-            file:bg-violet-50 file:px-4
+            file:bg-zinc-700 file:px-4
             file:py-2 file:text-sm
-            file:font-semibold file:text-violet-700
-            hover:file:bg-violet-100"
+            file:font-semibold file:text-white
+            hover:file:bg-zinc-600"
 			bind:files
 			on:change={handleFileUpload}
 		/>
 	</label>
-	<p class="text-sm text-gray-500">Maximum upload: {maxFiles} files</p>
+	<p class="text-sm text-zinc-500">Maximum upload: {maxFiles} files</p>
 </div>

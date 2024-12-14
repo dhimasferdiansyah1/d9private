@@ -51,26 +51,30 @@
 	<div class="mt-4 space-y-2">
 		<div class="mb-2">
 			{#each fileDetails as detail}
-				<p class="text-sm">
+				<p class="text-sm text-zinc-400">
 					File {detail.index + 1}: {detail.contacts} contacts
 				</p>
 			{/each}
 		</div>
 
-		{#each vcfContents as _, index}
-			<button
-				on:click={() => downloadVcf(index)}
-				class="mb-2 mr-2 rounded border border-[#560BAD] bg-[#F5F3FF] px-4 py-2 text-[#560BAD] hover:bg-[#e4dfff]"
-			>
-				Download {inputName}-{index + 1}.vcf
-			</button>
-		{/each}
+		<div class="flex flex-col gap-4">
+			<div class="flex flex-wrap gap-4">
+				{#each vcfContents as _, index}
+					<button
+						on:click={() => downloadVcf(index)}
+						class="rounded-lg bg-zinc-700 px-6 py-3 font-semibold text-zinc-300 transition duration-300 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-opacity-50"
+					>
+						Download {inputName}-{index + 1}.vcf
+					</button>
+				{/each}
+			</div>
 
-		<button
-			on:click={downloadAll}
-			class="rounded bg-[#560BAD] px-4 py-2 text-white hover:bg-opacity-90"
-		>
-			Download All
-		</button>
+			<button
+				on:click={downloadAll}
+				class="rounded-lg bg-white px-6 py-3 font-semibold text-zinc-900 transition duration-300 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+			>
+				Download All
+			</button>
+		</div>
 	</div>
 {/if}

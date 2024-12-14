@@ -1,133 +1,92 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-	import { navigating } from '$app/stores';
+<script>
+	import { page } from '$app/stores';
+	import { slide, fade } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
-	let links = [
+	export let links = [
 		{ href: '/', text: 'Home' },
 		{ href: '/vcf-generator', text: 'VCF Generator' },
+		{ href: '/vcf-generator-admin', text: 'VCF Generator Admin' },
 		{ href: '/tutorial', text: 'Tutorial' },
 		{ href: '/testimonials', text: 'Testimonials' }
 	];
 
-	let isMenuOpen = false;
+	let isOpen = false;
 
 	function toggleMenu() {
-		isMenuOpen = !isMenuOpen;
+		isOpen = !isOpen;
 	}
-
-	onMount(() => {
-		const handleNavigation = () => {
-			isMenuOpen = false;
-		};
-
-		const unsubscribe = navigating.subscribe((nav) => {
-			if (nav?.to) {
-				handleNavigation();
-			}
-		});
-
-		return unsubscribe;
-	});
 </script>
 
-<nav class="fixed w-full bg-white">
-	<div class="mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="flex justify-between py-1.5">
-			<div class="flex items-center">
-				<a
-					href="/"
-					class="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
-				>
-					<img src="/logo.png" alt="Logo" class="h-6 w-full" />
-				</a>
+<nav class="fixed left-0 top-0 z-10 w-full border-b border-b-zinc-800 bg-zinc-900">
+	<div class="container mx-auto max-w-4xl px-4">
+		<div class="flex items-center justify-between py-4">
+			<a href="/" class="text-xl font-bold text-white">D9 Private</a>
+			<div class="hidden space-x-6 md:flex">
+				{#each links as link}
+					<a
+						href={link.href}
+						class="transition duration-300 hover:text-white {$page.url.pathname === link.href
+							? 'text-white'
+							: 'text-zinc-400 '}"
+					>
+						{link.text}
+					</a>
+				{/each}
 			</div>
 
-			<!-- Hamburger Menu Button (Mobile) -->
-			<div class="flex items-center md:hidden">
-				<button
-					on:click={toggleMenu}
-					class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-[#560BAD] hover:text-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-					aria-controls="mobile-menu"
-					aria-expanded="false"
+			<button
+				class="text-zinc-400 focus:outline-none md:hidden"
+				on:click={toggleMenu}
+				aria-label="Toggle menu"
+			>
+				<svg
+					class="h-6 w-6"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
 				>
-					<span class="sr-only">Open main menu</span>
-					<!-- Hamburger Icon -->
-					{#if !isMenuOpen}
-						<svg
-							class="block h-6 w-6"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-							/>
-						</svg>
+					{#if isOpen}
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						></path>
 					{:else}
-						<!-- Close Icon -->
-						<svg
-							class="block h-6 w-6"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-						</svg>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16m-7 6h7"
+						></path>
 					{/if}
-				</button>
-			</div>
+				</svg>
+			</button>
+		</div>
 
-			<!-- Desktop Menu -->
-			<div class="hidden md:block">
-				<div class="flex items-center">
-					<div class="ml-10 flex items-baseline space-x-2">
-						{#each links as link}
-							<a
-								href={link.href}
-								class="rounded-md px-3 py-2 font-medium text-gray-800 hover:text-black"
-							>
-								{link.text}
-							</a>
-						{/each}
-						<div class="flex items-center pl-4">
-							<a
-								href="https://t.me/wsmemetnih"
-								class="rounded-md bg-[#560BAD] px-3 py-2 font-medium text-[#F5F3FF] hover:bg-opacity-90"
-							>
-								Bergabung
-							</a>
-						</div>
-					</div>
+		{#if isOpen}
+			<div
+				class="absolute left-0 right-0 top-full bg-zinc-900 shadow-md md:hidden"
+				transition:slide={{ duration: 300, easing: quintOut }}
+			>
+				<div class=" py-2">
+					{#each links as link}
+						<a
+							href={link.href}
+							class="block px-4 py-2 transition duration-300 hover:bg-zinc-700 hover:text-white {$page
+								.url.pathname === link.href
+								? 'bg-zinc-700 text-white'
+								: 'text-zinc-400 '}"
+							on:click={() => (isOpen = false)}
+							transition:fade={{ duration: 200 }}
+						>
+							{link.text}
+						</a>
+					{/each}
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<!-- Mobile Menu (Hidden by default) -->
-	<div class="md:hidden" id="mobile-menu" class:hidden={!isMenuOpen}>
-		<div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-			{#each links as link}
-				<a
-					href={link.href}
-					class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-[#560BAD] hover:text-[#F5F3FF]"
-				>
-					{link.text}
-				</a>
-			{/each}
-			<a
-				href="https://t.me/wsmemetnih"
-				class="block rounded-md bg-[#560BAD] px-3 py-2 text-base font-medium text-[#F5F3FF] hover:bg-opacity-90"
-			>
-				Bergabung
-			</a>
-		</div>
+		{/if}
 	</div>
 </nav>

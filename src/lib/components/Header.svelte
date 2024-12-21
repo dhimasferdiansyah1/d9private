@@ -8,7 +8,8 @@
 		{ href: '/vcf-generator', text: 'VCF Generator' },
 		{ href: '/vcf-generator-admin', text: 'VCF Generator Admin' },
 		{ href: '/tutorial', text: 'Tutorial' },
-		{ href: '/testimonials', text: 'Testimonials' }
+		{ href: '/testimonials', text: 'Testimonials' },
+		{ href: '/login', text: 'Login' }
 	];
 
 	let isOpen = false;

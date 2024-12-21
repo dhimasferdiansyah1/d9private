@@ -58,6 +58,9 @@
 	</section>
 
 	<section class="bg-zinc-900 py-16">
+		<h1 class="mb-8 text-center text-3xl font-bold text-white">
+			Chat dengan admin untuk meminta file
+		</h1>
 		<div class="container mx-auto px-4 md:px-0">
 			<div class="mx-auto max-w-md overflow-hidden rounded-lg bg-zinc-800">
 				<div class="p-6">
